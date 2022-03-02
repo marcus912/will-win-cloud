@@ -1,0 +1,2 @@
+select 'local'
+from dual;

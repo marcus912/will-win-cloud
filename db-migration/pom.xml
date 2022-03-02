@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.flywaydb.flyway</groupId>
+  <artifactId>db-migration</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0.0</version>
+  <name>db-migration-scripts</name>
+  <description>Database evolutions</description>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-maven-plugin</artifactId>
+        <version>5.2.4</version>
+        <configuration>
+          <url>jdbc:mysql://localhost:3306/homekit</url>
+          <user>homekit</user>
+          <password>homekit</password>
+          <locations>
+            <location>filesystem:src/main/resources/migrations/accounts_schema</location>
+            <location>filesystem:src/main/resources/migrations/accounts_storedprocedure</location>
+            <location>filesystem:src/main/resources/migrations/accounts_data/common</location>
+            <location>filesystem:src/main/resources/migrations/accounts_data/local</location>
+          </locations>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.17</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>local</id>
+      <properties>
+        <flyway.url>jdbc:mysql://localhost:3306/willwin</flyway.url>
+        <flyway.user>willwin</flyway.user>
+        <flyway.password>willwin</flyway.password>
+        <flyway.locations>filesystem:src/main/resources/migrations/accounts_schema,filesystem:src/main/resources/migrations/accounts_data/common,filesystem:src/main/resources/migrations/accounts_data/local</flyway.locations>
+      </properties>
+    </profile>
+    <profile>
+      <id>dev</id>
+      <properties>
+        <flyway.url>jdbc:mysql://dev-linksys-device-vault-rds-mysql.cluster-cypm0w6jn9i8.ap-northeast-1.rds.amazonaws.com:3306/willwin</flyway.url>
+        <flyway.user>homekit</flyway.user>
+        <flyway.password>homekit</flyway.password>
+        <flyway.locations>filesystem:src/main/resources/migrations/accounts_schema,filesystem:src/main/resources/migrations/accounts_data/common,filesystem:src/main/resources/migrations/accounts_data/dev</flyway.locations>
+      </properties>
+    </profile>
+    <profile>
+      <id>prod</id>
+      <properties>
+        <flyway.locations>filesystem:src/main/resources/migrations/accounts_schema,filesystem:src/main/resources/migrations/accounts_data/common,filesystem:src/main/resources/migrations/accounts_data/prod</flyway.locations>
+      </properties>
+    </profile>
+  </profiles>
+</project>

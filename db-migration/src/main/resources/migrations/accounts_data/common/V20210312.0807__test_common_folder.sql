@@ -1,0 +1,2 @@
+select 'common'
+from dual;
