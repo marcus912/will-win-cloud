@@ -1,17 +1,9 @@
-CREATE TABLE IF NOT EXISTS purchase_item
+CREATE TABLE purchase_item
 (
-  id
-  INT
-  AUTO_INCREMENT
-  PRIMARY
-  KEY,
-  name
-  VARCHAR
-(
-  255
-) NOT NULL,
-  status TINYINT DEFAULT 1,
-  description TEXT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  id          INT AUTO_INCREMENT PRIMARY KEY,
+  name        VARCHAR(255) NOT NULL,
+  status      TINYINT   DEFAULT 1,
+  comment     TEXT,
+  created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-  ) ENGINE = INNODB DEFAULT CHARSET=utf8mb4 COLLATE =utf8mb4_unicode_520_ci;
+) ENGINE = INNODB DEFAULT CHARSET=utf8mb4 COLLATE =utf8mb4_unicode_520_ci;

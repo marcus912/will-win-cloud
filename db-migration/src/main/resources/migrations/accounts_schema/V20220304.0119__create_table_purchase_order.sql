@@ -9,7 +9,7 @@ CREATE TABLE purchase_order
   price                INT       NOT NULL,
   total_amount         INT       NOT NULL,
   status               TINYINT   DEFAULT 1,
-  description          TEXT,
+  comment              TEXT,
   created_at           TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   modified_at          TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT `fk_purchase_order_pc_id` FOREIGN KEY (`purchase_customer_id`) REFERENCES purchase_customer (`id`),
