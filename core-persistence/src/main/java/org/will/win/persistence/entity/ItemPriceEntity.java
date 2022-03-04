@@ -13,6 +13,10 @@ public class ItemPriceEntity {
   private Byte status;
   private Timestamp createdAt;
   private Timestamp modifiedAt;
+  private CustomerEntity customerByCustomerId;
+  private MaterialEntity materialByMaterialId;
+  private ItemEntity itemByItemId;
+  private ColorEntity colorByColorId;
 
   @Id
   @Column(name = "id", nullable = false)
@@ -85,5 +89,45 @@ public class ItemPriceEntity {
   @Override
   public int hashCode() {
     return Objects.hash(id, price, comment, status, createdAt, modifiedAt);
+  }
+
+  @ManyToOne
+  @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
+  public CustomerEntity getCustomerByCustomerId() {
+    return customerByCustomerId;
+  }
+
+  public void setCustomerByCustomerId(CustomerEntity customerByCustomerId) {
+    this.customerByCustomerId = customerByCustomerId;
+  }
+
+  @ManyToOne
+  @JoinColumn(name = "material_id", referencedColumnName = "id", nullable = false)
+  public MaterialEntity getMaterialByMaterialId() {
+    return materialByMaterialId;
+  }
+
+  public void setMaterialByMaterialId(MaterialEntity materialByMaterialId) {
+    this.materialByMaterialId = materialByMaterialId;
+  }
+
+  @ManyToOne
+  @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false)
+  public ItemEntity getItemByItemId() {
+    return itemByItemId;
+  }
+
+  public void setItemByItemId(ItemEntity itemByItemId) {
+    this.itemByItemId = itemByItemId;
+  }
+
+  @ManyToOne
+  @JoinColumn(name = "color_id", referencedColumnName = "id", nullable = false)
+  public ColorEntity getColorByColorId() {
+    return colorByColorId;
+  }
+
+  public void setColorByColorId(ColorEntity colorByColorId) {
+    this.colorByColorId = colorByColorId;
   }
 }

@@ -17,6 +17,8 @@ public class PurchaseOrderEntity {
   private String comment;
   private Timestamp createdAt;
   private Timestamp modifiedAt;
+  private PurchaseCustomerEntity purchaseCustomerByPurchaseCustomerId;
+  private PurchaseItemEntity purchaseItemByPurchaseItemId;
 
   @Id
   @Column(name = "id", nullable = false)
@@ -119,5 +121,25 @@ public class PurchaseOrderEntity {
   @Override
   public int hashCode() {
     return Objects.hash(id, purchaseDate, quantity, price, totalAmount, status, comment, createdAt, modifiedAt);
+  }
+
+  @ManyToOne
+  @JoinColumn(name = "purchase_customer_id", referencedColumnName = "id", nullable = false)
+  public PurchaseCustomerEntity getPurchaseCustomerByPurchaseCustomerId() {
+    return purchaseCustomerByPurchaseCustomerId;
+  }
+
+  public void setPurchaseCustomerByPurchaseCustomerId(PurchaseCustomerEntity purchaseCustomerByPurchaseCustomerId) {
+    this.purchaseCustomerByPurchaseCustomerId = purchaseCustomerByPurchaseCustomerId;
+  }
+
+  @ManyToOne
+  @JoinColumn(name = "purchase_item_id", referencedColumnName = "id", nullable = false)
+  public PurchaseItemEntity getPurchaseItemByPurchaseItemId() {
+    return purchaseItemByPurchaseItemId;
+  }
+
+  public void setPurchaseItemByPurchaseItemId(PurchaseItemEntity purchaseItemByPurchaseItemId) {
+    this.purchaseItemByPurchaseItemId = purchaseItemByPurchaseItemId;
   }
 }
