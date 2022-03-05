@@ -2,17 +2,21 @@ package org.will.win.persistence.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Table(name = "purchase_item")
-public class PurchaseItemEntity {
+public class PurchaseItemEntity extends BaseEntity {
   private int id;
   private String name;
   private Byte status;
   private String comment;
   private Timestamp createdAt;
   private Timestamp modifiedAt;
+  private String createdBy;
+  private String updatedBy;
+  private Collection<PurchaseOrderEntity> purchaseOrdersById;
 
   @Id
   @Column(name = "id", nullable = false)
@@ -85,5 +89,14 @@ public class PurchaseItemEntity {
   @Override
   public int hashCode() {
     return Objects.hash(id, name, status, comment, createdAt, modifiedAt);
+  }
+
+  @OneToMany(mappedBy = "purchaseItemByPurchaseItemId", fetch = FetchType.LAZY)
+  public Collection<PurchaseOrderEntity> getPurchaseOrdersById() {
+    return purchaseOrdersById;
+  }
+
+  public void setPurchaseOrdersById(Collection<PurchaseOrderEntity> purchaseOrdersById) {
+    this.purchaseOrdersById = purchaseOrdersById;
   }
 }

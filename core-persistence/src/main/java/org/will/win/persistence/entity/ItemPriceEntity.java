@@ -1,18 +1,15 @@
 package org.will.win.persistence.entity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 @Table(name = "item_price")
-public class ItemPriceEntity {
+public class ItemPriceEntity extends BaseEntity {
   private int id;
   private int price;
   private String comment;
   private Byte status;
-  private Timestamp createdAt;
-  private Timestamp modifiedAt;
   private CustomerEntity customerByCustomerId;
   private MaterialEntity materialByMaterialId;
   private ItemEntity itemByItemId;
@@ -56,26 +53,6 @@ public class ItemPriceEntity {
 
   public void setStatus(Byte status) {
     this.status = status;
-  }
-
-  @Basic
-  @Column(name = "created_at", nullable = false)
-  public Timestamp getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Timestamp createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  @Basic
-  @Column(name = "modified_at", nullable = false)
-  public Timestamp getModifiedAt() {
-    return modifiedAt;
-  }
-
-  public void setModifiedAt(Timestamp modifiedAt) {
-    this.modifiedAt = modifiedAt;
   }
 
   @Override

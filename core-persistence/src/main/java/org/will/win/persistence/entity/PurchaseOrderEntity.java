@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "purchase_order")
-public class PurchaseOrderEntity {
+public class PurchaseOrderEntity extends BaseEntity {
   private int id;
   private Date purchaseDate;
   private Object quantity;
@@ -15,10 +15,9 @@ public class PurchaseOrderEntity {
   private int totalAmount;
   private Byte status;
   private String comment;
-  private Timestamp createdAt;
-  private Timestamp modifiedAt;
   private PurchaseCustomerEntity purchaseCustomerByPurchaseCustomerId;
   private PurchaseItemEntity purchaseItemByPurchaseItemId;
+  private UnitEntity unitByUnitId;
 
   @Id
   @Column(name = "id", nullable = false)
@@ -141,5 +140,15 @@ public class PurchaseOrderEntity {
 
   public void setPurchaseItemByPurchaseItemId(PurchaseItemEntity purchaseItemByPurchaseItemId) {
     this.purchaseItemByPurchaseItemId = purchaseItemByPurchaseItemId;
+  }
+
+  @ManyToOne
+  @JoinColumn(name = "unit_id", referencedColumnName = "id", nullable = false)
+  public UnitEntity getUnitByUnitId() {
+    return unitByUnitId;
+  }
+
+  public void setUnitByUnitId(UnitEntity unitByUnitId) {
+    this.unitByUnitId = unitByUnitId;
   }
 }

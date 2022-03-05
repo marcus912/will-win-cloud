@@ -20,14 +20,14 @@ public abstract class BaseEntity implements Serializable {
   @Column(name = "created_at")
   protected Timestamp createdAt;
 
-  @CreatedBy
-  @Column(name = "created_by")
-  protected String createdBy;
-
   @UpdateTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "modified_at")
   protected Timestamp modifiedAt;
+
+  @CreatedBy
+  @Column(name = "created_by")
+  protected String createdBy;
 
   @LastModifiedBy
   @Column(name = "updated_by")

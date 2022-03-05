@@ -1,20 +1,19 @@
 package org.will.win.persistence.entity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Table(name = "color")
-public class ColorEntity {
+public class ColorEntity extends BaseEntity {
   private int id;
   private String code;
   private String name;
   private String nameEng;
   private Byte status;
   private String comment;
-  private Timestamp createdAt;
-  private Timestamp modifiedAt;
+  private Collection<ItemPriceEntity> itemPricesById;
 
   @Id
   @Column(name = "id", nullable = false)
@@ -76,26 +75,6 @@ public class ColorEntity {
     this.comment = comment;
   }
 
-  @Basic
-  @Column(name = "created_at", nullable = false)
-  public Timestamp getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Timestamp createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  @Basic
-  @Column(name = "modified_at", nullable = false)
-  public Timestamp getModifiedAt() {
-    return modifiedAt;
-  }
-
-  public void setModifiedAt(Timestamp modifiedAt) {
-    this.modifiedAt = modifiedAt;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -107,5 +86,14 @@ public class ColorEntity {
   @Override
   public int hashCode() {
     return Objects.hash(id, code, name, nameEng, status, comment, createdAt, modifiedAt);
+  }
+
+  @OneToMany(mappedBy = "colorByColorId", fetch = FetchType.LAZY)
+  public Collection<ItemPriceEntity> getItemPricesById() {
+    return itemPricesById;
+  }
+
+  public void setItemPricesById(Collection<ItemPriceEntity> itemPricesById) {
+    this.itemPricesById = itemPricesById;
   }
 }

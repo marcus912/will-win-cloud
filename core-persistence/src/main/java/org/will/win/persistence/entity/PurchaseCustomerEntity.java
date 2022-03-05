@@ -1,12 +1,12 @@
 package org.will.win.persistence.entity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Table(name = "purchase_customer")
-public class PurchaseCustomerEntity {
+public class PurchaseCustomerEntity extends BaseEntity {
   private int id;
   private String name;
   private String address;
@@ -18,8 +18,7 @@ public class PurchaseCustomerEntity {
   private Integer taxIdNumber;
   private String comment;
   private Byte status;
-  private Timestamp createdAt;
-  private Timestamp modifiedAt;
+  private Collection<PurchaseOrderEntity> purchaseOrdersById;
 
   @Id
   @Column(name = "id", nullable = false)
@@ -131,26 +130,6 @@ public class PurchaseCustomerEntity {
     this.status = status;
   }
 
-  @Basic
-  @Column(name = "created_at", nullable = false)
-  public Timestamp getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Timestamp createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  @Basic
-  @Column(name = "modified_at", nullable = false)
-  public Timestamp getModifiedAt() {
-    return modifiedAt;
-  }
-
-  public void setModifiedAt(Timestamp modifiedAt) {
-    this.modifiedAt = modifiedAt;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -162,5 +141,14 @@ public class PurchaseCustomerEntity {
   @Override
   public int hashCode() {
     return Objects.hash(id, name, address, fax, tel, contact, contactPhone, contactEmail, taxIdNumber, comment, status, createdAt, modifiedAt);
+  }
+
+  @OneToMany(mappedBy = "purchaseCustomerByPurchaseCustomerId", fetch = FetchType.LAZY)
+  public Collection<PurchaseOrderEntity> getPurchaseOrdersById() {
+    return purchaseOrdersById;
+  }
+
+  public void setPurchaseOrdersById(Collection<PurchaseOrderEntity> purchaseOrdersById) {
+    this.purchaseOrdersById = purchaseOrdersById;
   }
 }
