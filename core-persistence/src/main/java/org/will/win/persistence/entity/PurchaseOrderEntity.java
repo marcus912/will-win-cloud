@@ -10,9 +10,9 @@ import java.util.Objects;
 public class PurchaseOrderEntity extends BaseEntity {
   private int id;
   private Date purchaseDate;
-  private Object quantity;
-  private int price;
-  private int totalAmount;
+  private Integer quantity;
+  private Integer price;
+  private Integer totalAmount;
   private Byte status;
   private String comment;
   private PurchaseCustomerEntity purchaseCustomerByPurchaseCustomerId;
@@ -41,31 +41,31 @@ public class PurchaseOrderEntity extends BaseEntity {
 
   @Basic
   @Column(name = "quantity", nullable = false)
-  public Object getQuantity() {
+  public Integer getQuantity() {
     return quantity;
   }
 
-  public void setQuantity(Object quantity) {
+  public void setQuantity(Integer quantity) {
     this.quantity = quantity;
   }
 
   @Basic
   @Column(name = "price", nullable = false)
-  public int getPrice() {
+  public Integer getPrice() {
     return price;
   }
 
-  public void setPrice(int price) {
+  public void setPrice(Integer price) {
     this.price = price;
   }
 
   @Basic
   @Column(name = "total_amount", nullable = false)
-  public int getTotalAmount() {
+  public Integer getTotalAmount() {
     return totalAmount;
   }
 
-  public void setTotalAmount(int totalAmount) {
+  public void setTotalAmount(Integer totalAmount) {
     this.totalAmount = totalAmount;
   }
 

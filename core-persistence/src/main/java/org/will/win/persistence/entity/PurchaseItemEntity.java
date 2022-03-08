@@ -10,7 +10,7 @@ import java.util.Objects;
 public class PurchaseItemEntity extends BaseEntity {
   private int id;
   private String name;
-  private Byte status;
+  private Boolean status;
   private String comment;
   private Timestamp createdAt;
   private Timestamp modifiedAt;
@@ -40,11 +40,11 @@ public class PurchaseItemEntity extends BaseEntity {
 
   @Basic
   @Column(name = "status", nullable = true)
-  public Byte getStatus() {
+  public Boolean getStatus() {
     return status;
   }
 
-  public void setStatus(Byte status) {
+  public void setStatus(Boolean status) {
     this.status = status;
   }
 

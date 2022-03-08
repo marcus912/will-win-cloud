@@ -32,6 +32,10 @@
       <groupId>org.will-win</groupId>
       <artifactId>core-persistence</artifactId>
     </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
