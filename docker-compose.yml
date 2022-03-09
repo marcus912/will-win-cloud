@@ -6,11 +6,10 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - will-win-mysql:/var/lib/mysql
+      - will-win-mysql-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: mysql
 
 volumes:
-  will-win-mysql:
-    external: true
-    name: will-win-mysql
+  will-win-mysql-data:
+
