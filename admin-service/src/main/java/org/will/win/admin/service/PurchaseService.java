@@ -12,6 +12,7 @@ import org.will.win.persistence.repository.PurchaseItemRepository;
 import org.will.win.persistence.repository.PurchaseOrderRepository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -43,4 +44,19 @@ public class PurchaseService {
     }
     return list;
   }
+
+  public PurchaseItem editPurchaseItem(PurchaseItemInput input, int id) {
+    PurchaseItemEntity entity = purchaseItemRepository.findById(id).get();
+    // TODO else throw resource not found exception.
+    if (Objects.nonNull(entity)) {
+      entity.setName(input.getName());
+      entity.setComment(input.getComment());
+      if (Objects.nonNull(input.getStatus())) {
+        entity.setStatus(input.getStatus());
+      }
+      return PurchaseItem.of(purchaseItemRepository.save(entity));
+    }
+    return null;
+  }
 }
+

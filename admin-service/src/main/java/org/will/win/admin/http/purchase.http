@@ -11,3 +11,13 @@ GET http://localhost:8080/purchase/item
 Accept: application/json
 
 ###
+
+PUT http://localhost:8080/purchase/item/1
+Content-Type: application/json
+
+{
+  "name": "item-updated",
+  "comment": "comment-updated"
+}
+
+###

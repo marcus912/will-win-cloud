@@ -3,6 +3,7 @@ package org.will.win.admin.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.will.win.admin.input.PurchaseItemInput;
 import org.will.win.admin.model.PurchaseItem;
@@ -21,11 +22,6 @@ public class PurchaseController {
     this.purchaseService = purchaseService;
   }
 
-  @GetMapping("/")
-  public String index() {
-    return "PurchaseController";
-  }
-
   @PostMapping("/item")
   public PurchaseItem postPurchaseItem(@RequestBody PurchaseItemInput input) {
     return purchaseService.addPurchaseItem(input);
@@ -35,4 +31,11 @@ public class PurchaseController {
   public List<PurchaseItem> getPurchaseItems(@PageableDefault(size = 500, sort = "id") Pageable pageable) {
     return purchaseService.searchPurchaseItems(pageable);
   }
+
+  @PutMapping("/item/{id}")
+  @ResponseStatus(code = HttpStatus.NO_CONTENT)
+  public PurchaseItem putPurchaseItem(@RequestBody PurchaseItemInput input, @PathVariable int id) {
+    return purchaseService.editPurchaseItem(input, id);
+  }
+
 }
