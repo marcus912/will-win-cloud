@@ -6,7 +6,9 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -16,12 +18,10 @@ import java.util.Objects;
 public abstract class BaseEntity implements Serializable {
 
   @CreationTimestamp
-  @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "created_at")
   protected Timestamp createdAt;
 
   @UpdateTimestamp
-  @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "modified_at")
   protected Timestamp modifiedAt;
 

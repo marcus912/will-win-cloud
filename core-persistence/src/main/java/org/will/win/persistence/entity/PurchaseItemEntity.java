@@ -1,25 +1,29 @@
 package org.will.win.persistence.entity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Table(name = "purchase_item")
 public class PurchaseItemEntity extends BaseEntity {
-  private int id;
-  private String name;
-  private Boolean status;
-  private String comment;
-  private Timestamp createdAt;
-  private Timestamp modifiedAt;
-  private String createdBy;
-  private String updatedBy;
-  private Collection<PurchaseOrderEntity> purchaseOrdersById;
-
   @Id
   @Column(name = "id", nullable = false)
+  private int id;
+
+  @Basic
+  @Column(name = "name", nullable = false, length = 255)
+  private String name;
+
+  @Basic
+  @Column(name = "status", nullable = true, insertable = false, updatable = false)
+  private Boolean status;
+
+  private String comment;
+
+  @OneToMany(mappedBy = "purchaseItemByPurchaseItemId", fetch = FetchType.LAZY)
+  private Collection<PurchaseOrderEntity> purchaseOrdersById;
+
   public int getId() {
     return id;
   }
@@ -28,8 +32,6 @@ public class PurchaseItemEntity extends BaseEntity {
     this.id = id;
   }
 
-  @Basic
-  @Column(name = "name", nullable = false, length = 255)
   public String getName() {
     return name;
   }
@@ -38,8 +40,6 @@ public class PurchaseItemEntity extends BaseEntity {
     this.name = name;
   }
 
-  @Basic
-  @Column(name = "status", nullable = true)
   public Boolean getStatus() {
     return status;
   }
@@ -58,26 +58,6 @@ public class PurchaseItemEntity extends BaseEntity {
     this.comment = comment;
   }
 
-  @Basic
-  @Column(name = "created_at", nullable = false)
-  public Timestamp getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Timestamp createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  @Basic
-  @Column(name = "modified_at", nullable = false)
-  public Timestamp getModifiedAt() {
-    return modifiedAt;
-  }
-
-  public void setModifiedAt(Timestamp modifiedAt) {
-    this.modifiedAt = modifiedAt;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -91,7 +71,6 @@ public class PurchaseItemEntity extends BaseEntity {
     return Objects.hash(id, name, status, comment, createdAt, modifiedAt);
   }
 
-  @OneToMany(mappedBy = "purchaseItemByPurchaseItemId", fetch = FetchType.LAZY)
   public Collection<PurchaseOrderEntity> getPurchaseOrdersById() {
     return purchaseOrdersById;
   }

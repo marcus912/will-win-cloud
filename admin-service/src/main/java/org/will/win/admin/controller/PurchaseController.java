@@ -1,15 +1,17 @@
 package org.will.win.admin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.*;
 import org.will.win.admin.input.PurchaseItemInput;
 import org.will.win.admin.model.PurchaseItem;
 import org.will.win.admin.service.PurchaseService;
 
+import java.util.List;
+
 @RestController()
+@RequestMapping(path = "/purchase", produces = "application/json")
 public class PurchaseController {
 
   private PurchaseService purchaseService;
@@ -24,9 +26,13 @@ public class PurchaseController {
     return "PurchaseController";
   }
 
-  @PostMapping("/purchase-item")
+  @PostMapping("/item")
   public PurchaseItem postPurchaseItem(@RequestBody PurchaseItemInput input) {
     return purchaseService.addPurchaseItem(input);
   }
 
+  @GetMapping("/item")
+  public List<PurchaseItem> getPurchaseItems(@PageableDefault(size = 500, sort = "id") Pageable pageable) {
+    return purchaseService.searchPurchaseItems(pageable);
+  }
 }

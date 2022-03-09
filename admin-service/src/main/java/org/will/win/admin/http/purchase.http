@@ -1,11 +1,13 @@
-### GET request with a header
-GET https://httpbin.org/ip
-Accept: application/json
-
-POST http://localhost:8080/purchase
+POST http://localhost:8080/purchase/item
 Content-Type: application/json
 
 {
-  "id": 999,
-  "value": "content"
+  "name": "item-1",
+  "comment": "comment"
 }
+
+###
+GET http://localhost:8080/purchase/item
+Accept: application/json
+
+###
