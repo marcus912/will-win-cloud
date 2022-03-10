@@ -33,9 +33,14 @@ public class PurchaseController {
   }
 
   @PutMapping("/item/{id}")
-  @ResponseStatus(code = HttpStatus.NO_CONTENT)
   public PurchaseItem putPurchaseItem(@RequestBody PurchaseItemInput input, @PathVariable int id) {
     return purchaseService.editPurchaseItem(input, id);
+  }
+
+  @DeleteMapping("/item/{id}")
+  @ResponseStatus(code = HttpStatus.NO_CONTENT)
+  public void deletePurchaseItem(@PathVariable int id) {
+    purchaseService.deletePurchaseItem(id);
   }
 
 }

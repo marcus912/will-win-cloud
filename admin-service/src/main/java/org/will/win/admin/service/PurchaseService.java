@@ -58,5 +58,13 @@ public class PurchaseService {
     }
     return null;
   }
+
+  public void deletePurchaseItem(int id) {
+    PurchaseItemEntity entity = purchaseItemRepository.findById(id).get();
+    // TODO else throw resource not found exception.
+    if (Objects.nonNull(entity)) {
+      purchaseItemRepository.delete(entity);
+    }
+  }
 }
 
