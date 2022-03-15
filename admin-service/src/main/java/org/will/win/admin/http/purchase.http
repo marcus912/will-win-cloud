@@ -1,4 +1,4 @@
-POST http://localhost:8080/purchase/item
+POST http://localhost:8080/purchase/items
 Content-Type: application/json
 
 {
@@ -7,12 +7,12 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/purchase/item
+GET http://localhost:8080/purchase/items
 Accept: application/json
 
 ###
 
-PUT http://localhost:8080/purchase/item/1
+PUT http://localhost:8080/purchase/items/1
 Content-Type: application/json
 
 {

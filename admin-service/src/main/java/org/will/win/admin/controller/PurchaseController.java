@@ -22,22 +22,22 @@ public class PurchaseController {
     this.purchaseService = purchaseService;
   }
 
-  @PostMapping("/item")
+  @PostMapping("/items")
   public PurchaseItem postPurchaseItem(@RequestBody PurchaseItemInput input) {
     return purchaseService.addPurchaseItem(input);
   }
 
-  @GetMapping("/item")
+  @GetMapping("/items")
   public List<PurchaseItem> getPurchaseItems(@PageableDefault(size = 500, sort = "id") Pageable pageable) {
     return purchaseService.searchPurchaseItems(pageable);
   }
 
-  @PutMapping("/item/{id}")
+  @PutMapping("/items/{id}")
   public PurchaseItem putPurchaseItem(@RequestBody PurchaseItemInput input, @PathVariable int id) {
     return purchaseService.editPurchaseItem(input, id);
   }
 
-  @DeleteMapping("/item/{id}")
+  @DeleteMapping("/items/{id}")
   @ResponseStatus(code = HttpStatus.NO_CONTENT)
   public void deletePurchaseItem(@PathVariable int id) {
     purchaseService.deletePurchaseItem(id);
