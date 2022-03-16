@@ -19,6 +19,7 @@
     <module>admin-service</module>
     <module>core-persistence</module>
     <module>db-migration</module>
+      <module>core-common</module>
   </modules>
 
   <properties>
@@ -31,6 +32,11 @@
       <dependency>
         <groupId>org.will-win</groupId>
         <artifactId>core-persistence</artifactId>
+        <version>1.0.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.will-win</groupId>
+        <artifactId>core-common</artifactId>
         <version>1.0.0</version>
       </dependency>
       <dependency>

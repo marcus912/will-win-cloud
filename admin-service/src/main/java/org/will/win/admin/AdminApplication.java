@@ -6,7 +6,9 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.will.win.common.config.WebCorsConfig;
 
 import java.util.Arrays;
 
@@ -16,6 +18,9 @@ import java.util.Arrays;
 @EnableCaching
 //@PropertySource(value = {})
 @ComponentScan({"org.will.win"})
+@Import({
+  WebCorsConfig.class
+})
 public class AdminApplication {
   public static void main(String[] args) {
     ApplicationContext ctx = SpringApplication.run(AdminApplication.class, args);
