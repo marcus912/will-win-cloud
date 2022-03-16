@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 
 public class PurchaseItem {
 
+  private Integer id;
   private String name;
   private String comment;
   private Boolean status;
@@ -14,14 +15,23 @@ public class PurchaseItem {
   private String createdBy;
   private String updatedBy;
 
-  public PurchaseItem(String name, String comment, Boolean status) {
+  public PurchaseItem(Integer id, String name, String comment, Boolean status) {
+    this.id = id;
     this.name = name;
     this.comment = comment;
     this.status = status;
   }
 
   public static PurchaseItem of(PurchaseItemEntity entity) {
-    return new PurchaseItem(entity.getName(), entity.getComment(), entity.getStatus());
+    return new PurchaseItem(entity.getId(), entity.getName(), entity.getComment(), entity.getStatus());
+  }
+
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public String getName() {
