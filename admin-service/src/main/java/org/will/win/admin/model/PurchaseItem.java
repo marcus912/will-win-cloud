@@ -2,7 +2,7 @@ package org.will.win.admin.model;
 
 import org.will.win.persistence.entity.PurchaseItemEntity;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 public class PurchaseItem {
 
@@ -10,8 +10,8 @@ public class PurchaseItem {
   private String name;
   private String comment;
   private Boolean status;
-  private Timestamp createdAt;
-  private Timestamp modifiedAt;
+  private Date createdAt;
+  private Date modifiedAt;
   private String createdBy;
   private String updatedBy;
 
@@ -22,8 +22,24 @@ public class PurchaseItem {
     this.status = status;
   }
 
+  public PurchaseItem(Integer id, String name, String comment, Boolean status, Date createdAt, Date modifiedAt, String createdBy, String updatedBy) {
+    this.id = id;
+    this.name = name;
+    this.comment = comment;
+    this.status = status;
+    this.createdAt = createdAt;
+    this.modifiedAt = modifiedAt;
+    this.createdBy = createdBy;
+    this.updatedBy = updatedBy;
+  }
+
   public static PurchaseItem of(PurchaseItemEntity entity) {
-    return new PurchaseItem(entity.getId(), entity.getName(), entity.getComment(), entity.getStatus());
+    return new PurchaseItem(entity.getId(), entity.getName(), entity.getComment(), entity.getStatus(),
+      new Date(entity.getCreatedAt().getTime()),
+      new Date(entity.getModifiedAt().getTime()),
+      entity.getCreatedBy(),
+      entity.getUpdatedBy()
+    );
   }
 
   public Integer getId() {
@@ -58,19 +74,19 @@ public class PurchaseItem {
     this.status = status;
   }
 
-  public Timestamp getCreatedAt() {
+  public Date getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(Timestamp createdAt) {
+  public void setCreatedAt(Date createdAt) {
     this.createdAt = createdAt;
   }
 
-  public Timestamp getModifiedAt() {
+  public Date getModifiedAt() {
     return modifiedAt;
   }
 
-  public void setModifiedAt(Timestamp modifiedAt) {
+  public void setModifiedAt(Date modifiedAt) {
     this.modifiedAt = modifiedAt;
   }
 

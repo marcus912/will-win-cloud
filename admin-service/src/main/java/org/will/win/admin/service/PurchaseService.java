@@ -5,11 +5,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.will.win.admin.input.PurchaseItemInput;
+import org.will.win.admin.input.PurchaseOrderInput;
 import org.will.win.admin.model.PurchaseItem;
+import org.will.win.admin.model.PurchaseOrder;
+import org.will.win.persistence.entity.PurchaseCustomerEntity;
 import org.will.win.persistence.entity.PurchaseItemEntity;
+import org.will.win.persistence.entity.PurchaseOrderEntity;
+import org.will.win.persistence.entity.UnitEntity;
 import org.will.win.persistence.repository.PurchaseCustomerRepository;
 import org.will.win.persistence.repository.PurchaseItemRepository;
 import org.will.win.persistence.repository.PurchaseOrderRepository;
+import org.will.win.persistence.repository.UnitRepository;
 
 import java.util.List;
 import java.util.Objects;
@@ -21,12 +27,17 @@ public class PurchaseService {
   final private PurchaseItemRepository purchaseItemRepository;
   final private PurchaseCustomerRepository purchaseCustomerRepository;
   final private PurchaseOrderRepository purchaseOrderRepository;
+  final private UnitRepository unitRepository;
 
   @Autowired
-  public PurchaseService(PurchaseItemRepository purchaseItemRepository, PurchaseCustomerRepository purchaseCustomerRepository, PurchaseOrderRepository purchaseOrderRepository) {
+  public PurchaseService(PurchaseItemRepository purchaseItemRepository,
+                         PurchaseCustomerRepository purchaseCustomerRepository,
+                         PurchaseOrderRepository purchaseOrderRepository,
+                         UnitRepository unitRepository) {
     this.purchaseItemRepository = purchaseItemRepository;
     this.purchaseCustomerRepository = purchaseCustomerRepository;
     this.purchaseOrderRepository = purchaseOrderRepository;
+    this.unitRepository = unitRepository;
   }
 
   public PurchaseItem addPurchaseItem(PurchaseItemInput input) {
@@ -64,6 +75,60 @@ public class PurchaseService {
     // TODO else throw resource not found exception.
     if (Objects.nonNull(entity)) {
       purchaseItemRepository.delete(entity);
+    }
+  }
+
+  // =========================== Order ===========================
+
+  public PurchaseOrder addPurchaseOrder(PurchaseOrderInput input) {
+    PurchaseOrderEntity entity = new PurchaseOrderEntity();
+
+
+    syncPurchaseOrderData(input, entity);
+
+    return PurchaseOrder.of(purchaseOrderRepository.save(entity));
+  }
+
+  @Transactional(readOnly = true)
+  public List<PurchaseOrder> searchPurchaseOrders(Pageable pageable) {
+    return purchaseOrderRepository.findAll().stream()
+      .map(e -> PurchaseOrder.of(e))
+      .collect(Collectors.toList());
+  }
+
+  public PurchaseOrder editPurchaseOrder(PurchaseOrderInput input, int id) {
+    PurchaseOrderEntity entity = purchaseOrderRepository.findById(id).get();
+    // TODO else throw resource not found exception.
+    if (Objects.nonNull(entity)) {
+      syncPurchaseOrderData(input, entity);
+      return PurchaseOrder.of(purchaseOrderRepository.save(entity));
+    }
+    return null;
+  }
+
+  private void syncPurchaseOrderData(PurchaseOrderInput input,
+                                     PurchaseOrderEntity entity) {
+    PurchaseItemEntity item = purchaseItemRepository.findById(input.getPurchaseItemId()).get();
+    PurchaseCustomerEntity customer = purchaseCustomerRepository.findById(input.getPurchaseCustomerId()).get();
+    UnitEntity unit = unitRepository.findById(input.getUnitId()).get();
+
+    entity.setPurchaseDate(input.getPurchaseDate());
+    entity.setPurchaseCustomerByPurchaseCustomerId(customer);
+    entity.setPurchaseItemByPurchaseItemId(item);
+    entity.setUnitByUnitId(unit);
+    entity.setQuantity(input.getQuantity());
+    entity.setPrice(input.getPrice());
+    entity.setTotalAmount(input.getTotalAmount());
+    //      if (Objects.nonNull(input.getStatus())) {
+    //        entity.setStatus(input.getStatus());
+    //      }
+  }
+
+  public void deletePurchaseOrder(int id) {
+    PurchaseOrderEntity entity = purchaseOrderRepository.findById(id).get();
+    // TODO else throw resource not found exception.
+    if (Objects.nonNull(entity)) {
+      purchaseOrderRepository.delete(entity);
     }
   }
 }
