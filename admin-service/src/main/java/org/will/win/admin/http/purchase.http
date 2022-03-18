@@ -21,3 +21,39 @@ Content-Type: application/json
 }
 
 ###
+### customer
+POST http://localhost:8080/purchase/customers
+Content-Type: application/json
+
+{
+  "name": "Customer-1",
+  "address": "address",
+  "fax": "fax",
+  "tel": "04-242423",
+  "contact": "contactor",
+  "contactPhone": "0912-345689",
+  "contactEmail": "abc@123.com",
+  "taxIdNumber": "12384706",
+  "comment": "comment"
+}
+
+###
+GET http://localhost:8080/purchase/customers
+Accept: application/json
+
+###
+
+PUT http://localhost:8080/purchase/customers/1
+Content-Type: application/json
+
+{
+  "name": "Customer-1-updated",
+  "address": "address-updated",
+  "fax": "fax-updated",
+  "tel": "04-242423",
+  "contact": "contactor",
+  "contactPhone": "0912-345689",
+  "contactEmail": "abc@123.com",
+  "taxIdNumber": "12384706",
+  "comment": "comment"
+}

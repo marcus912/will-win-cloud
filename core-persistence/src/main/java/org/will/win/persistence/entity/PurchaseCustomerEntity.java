@@ -50,7 +50,7 @@ public class PurchaseCustomerEntity extends BaseEntity {
 
   @Basic
   @Column(name = "status", nullable = true)
-  private Integer status;
+  private Integer status = 1;
 
   @OneToMany(mappedBy = "purchaseCustomerByPurchaseCustomerId", fetch = FetchType.LAZY)
   private List<PurchaseOrderEntity> purchaseOrdersById;

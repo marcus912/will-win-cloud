@@ -157,15 +157,15 @@ public class PurchaseService {
 
   private void syncPurchaseCustomerData(PurchaseCustomerInput input,
                                         PurchaseCustomerEntity entity) {
-    input.setName(entity.getName());
-    input.setAddress(entity.getAddress());
-    input.setFax(entity.getFax());
-    input.setTel(entity.getTel());
-    input.setContact(entity.getContact());
-    input.setContactPhone(entity.getContactPhone());
-    input.setContactEmail(entity.getContactEmail());
-    input.setTaxIdNumber(entity.getTaxIdNumber());
-    input.setComment(entity.getComment());
+    entity.setName(input.getName());
+    entity.setAddress(input.getAddress());
+    entity.setFax(input.getFax());
+    entity.setTel(input.getTel());
+    entity.setContact(input.getContact());
+    entity.setContactPhone(input.getContactPhone());
+    entity.setContactEmail(input.getContactEmail());
+    entity.setTaxIdNumber(input.getTaxIdNumber());
+    entity.setComment(input.getComment());
 //    if (Objects.nonNull(input.getStatus())) {
 //      entity.setStatus(input.getStatus());
 //    }
