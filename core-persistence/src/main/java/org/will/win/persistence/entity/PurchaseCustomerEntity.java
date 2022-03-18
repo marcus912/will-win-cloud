@@ -1,27 +1,60 @@
 package org.will.win.persistence.entity;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "purchase_customer")
 public class PurchaseCustomerEntity extends BaseEntity {
-  private int id;
-  private String name;
-  private String address;
-  private String fax;
-  private String tel;
-  private String contact;
-  private String contactPhone;
-  private String contactEmail;
-  private Integer taxIdNumber;
-  private String comment;
-  private Byte status;
-  private Collection<PurchaseOrderEntity> purchaseOrdersById;
 
   @Id
   @Column(name = "id", nullable = false)
+  private int id;
+
+  @Basic
+  @Column(name = "name", nullable = false, length = 100)
+  private String name;
+
+  @Basic
+  @Column(name = "address", nullable = true, length = 255)
+  private String address;
+
+  @Basic
+  @Column(name = "fax", nullable = true, length = 255)
+  private String fax;
+
+  @Basic
+  @Column(name = "tel", nullable = true, length = 255)
+  private String tel;
+
+  @Basic
+  @Column(name = "contact", nullable = true, length = 255)
+  private String contact;
+
+  @Basic
+  @Column(name = "contact_phone", nullable = true, length = 255)
+  private String contactPhone;
+
+  @Basic
+  @Column(name = "contact_email", nullable = true, length = 255)
+  private String contactEmail;
+
+  @Basic
+  @Column(name = "tax_id_number", nullable = true)
+  private Integer taxIdNumber;
+
+  @Basic
+  @Column(name = "comment", nullable = true, length = -1)
+  private String comment;
+
+  @Basic
+  @Column(name = "status", nullable = true)
+  private Integer status;
+
+  @OneToMany(mappedBy = "purchaseCustomerByPurchaseCustomerId", fetch = FetchType.LAZY)
+  private List<PurchaseOrderEntity> purchaseOrdersById;
+
   public int getId() {
     return id;
   }
@@ -30,8 +63,6 @@ public class PurchaseCustomerEntity extends BaseEntity {
     this.id = id;
   }
 
-  @Basic
-  @Column(name = "name", nullable = false, length = 100)
   public String getName() {
     return name;
   }
@@ -40,8 +71,6 @@ public class PurchaseCustomerEntity extends BaseEntity {
     this.name = name;
   }
 
-  @Basic
-  @Column(name = "address", nullable = true, length = 255)
   public String getAddress() {
     return address;
   }
@@ -50,8 +79,6 @@ public class PurchaseCustomerEntity extends BaseEntity {
     this.address = address;
   }
 
-  @Basic
-  @Column(name = "fax", nullable = true, length = 255)
   public String getFax() {
     return fax;
   }
@@ -60,8 +87,6 @@ public class PurchaseCustomerEntity extends BaseEntity {
     this.fax = fax;
   }
 
-  @Basic
-  @Column(name = "tel", nullable = true, length = 255)
   public String getTel() {
     return tel;
   }
@@ -70,8 +95,6 @@ public class PurchaseCustomerEntity extends BaseEntity {
     this.tel = tel;
   }
 
-  @Basic
-  @Column(name = "contact", nullable = true, length = 255)
   public String getContact() {
     return contact;
   }
@@ -80,8 +103,6 @@ public class PurchaseCustomerEntity extends BaseEntity {
     this.contact = contact;
   }
 
-  @Basic
-  @Column(name = "contact_phone", nullable = true, length = 255)
   public String getContactPhone() {
     return contactPhone;
   }
@@ -90,8 +111,6 @@ public class PurchaseCustomerEntity extends BaseEntity {
     this.contactPhone = contactPhone;
   }
 
-  @Basic
-  @Column(name = "contact_email", nullable = true, length = 255)
   public String getContactEmail() {
     return contactEmail;
   }
@@ -100,8 +119,6 @@ public class PurchaseCustomerEntity extends BaseEntity {
     this.contactEmail = contactEmail;
   }
 
-  @Basic
-  @Column(name = "tax_id_number", nullable = true)
   public Integer getTaxIdNumber() {
     return taxIdNumber;
   }
@@ -110,8 +127,6 @@ public class PurchaseCustomerEntity extends BaseEntity {
     this.taxIdNumber = taxIdNumber;
   }
 
-  @Basic
-  @Column(name = "comment", nullable = true, length = -1)
   public String getComment() {
     return comment;
   }
@@ -120,13 +135,11 @@ public class PurchaseCustomerEntity extends BaseEntity {
     this.comment = comment;
   }
 
-  @Basic
-  @Column(name = "status", nullable = true)
-  public Byte getStatus() {
+  public Integer getStatus() {
     return status;
   }
 
-  public void setStatus(Byte status) {
+  public void setStatus(Integer status) {
     this.status = status;
   }
 
@@ -143,12 +156,11 @@ public class PurchaseCustomerEntity extends BaseEntity {
     return Objects.hash(id, name, address, fax, tel, contact, contactPhone, contactEmail, taxIdNumber, comment, status, createdAt, modifiedAt);
   }
 
-  @OneToMany(mappedBy = "purchaseCustomerByPurchaseCustomerId", fetch = FetchType.LAZY)
-  public Collection<PurchaseOrderEntity> getPurchaseOrdersById() {
+  public List<PurchaseOrderEntity> getPurchaseOrdersById() {
     return purchaseOrdersById;
   }
 
-  public void setPurchaseOrdersById(Collection<PurchaseOrderEntity> purchaseOrdersById) {
+  public void setPurchaseOrdersById(List<PurchaseOrderEntity> purchaseOrdersById) {
     this.purchaseOrdersById = purchaseOrdersById;
   }
 }

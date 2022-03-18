@@ -1,10 +1,12 @@
 package org.will.win.admin.model;
 
+import org.will.win.common.model.BaseModel;
 import org.will.win.persistence.entity.PurchaseOrderEntity;
 
 import java.util.Date;
+import java.util.Objects;
 
-public class PurchaseOrder {
+public class PurchaseOrder extends BaseModel {
   private Integer id;
   private Date purchase;
   private String purchaseCustomerName;
@@ -15,10 +17,6 @@ public class PurchaseOrder {
   private Integer totalAmount;
   private String status;
   private String comment;
-  private Date createdAt;
-  private Date modifiedAt;
-  private String createdBy;
-  private String updatedBy;
 
   public PurchaseOrder(Integer id,
                        Date purchase,
@@ -147,35 +145,36 @@ public class PurchaseOrder {
     this.comment = comment;
   }
 
-  public Date getCreatedAt() {
-    return createdAt;
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    PurchaseOrder that = (PurchaseOrder) o;
+    return Objects.equals(id, that.id) && Objects.equals(purchase, that.purchase) && Objects.equals(purchaseCustomerName, that.purchaseCustomerName) && Objects.equals(purchaseItemName, that.purchaseItemName) && Objects.equals(unitName, that.unitName) && Objects.equals(quantity, that.quantity) && Objects.equals(price, that.price) && Objects.equals(totalAmount, that.totalAmount) && Objects.equals(status, that.status) && Objects.equals(comment, that.comment);
   }
 
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, purchase, purchaseCustomerName, purchaseItemName, unitName, quantity, price, totalAmount, status, comment);
   }
 
-  public Date getModifiedAt() {
-    return modifiedAt;
-  }
-
-  public void setModifiedAt(Date modifiedAt) {
-    this.modifiedAt = modifiedAt;
-  }
-
-  public String getCreatedBy() {
-    return createdBy;
-  }
-
-  public void setCreatedBy(String createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  public String getUpdatedBy() {
-    return updatedBy;
-  }
-
-  public void setUpdatedBy(String updatedBy) {
-    this.updatedBy = updatedBy;
+  @Override
+  public String toString() {
+    return "PurchaseOrder{" +
+      "id=" + id +
+      ", purchase=" + purchase +
+      ", purchaseCustomerName='" + purchaseCustomerName + '\'' +
+      ", purchaseItemName='" + purchaseItemName + '\'' +
+      ", unitName='" + unitName + '\'' +
+      ", quantity=" + quantity +
+      ", price=" + price +
+      ", totalAmount=" + totalAmount +
+      ", status='" + status + '\'' +
+      ", comment='" + comment + '\'' +
+      ", createdAt=" + createdAt +
+      ", modifiedAt=" + modifiedAt +
+      ", createdBy='" + createdBy + '\'' +
+      ", updatedBy='" + updatedBy + '\'' +
+      '}';
   }
 }

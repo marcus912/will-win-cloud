@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.will.win.admin.input.PurchaseCustomerInput;
 import org.will.win.admin.input.PurchaseItemInput;
 import org.will.win.admin.input.PurchaseOrderInput;
+import org.will.win.admin.model.PurchaseCustomer;
 import org.will.win.admin.model.PurchaseItem;
 import org.will.win.admin.model.PurchaseOrder;
 import org.will.win.persistence.entity.PurchaseCustomerEntity;
@@ -82,10 +84,7 @@ public class PurchaseService {
 
   public PurchaseOrder addPurchaseOrder(PurchaseOrderInput input) {
     PurchaseOrderEntity entity = new PurchaseOrderEntity();
-
-
     syncPurchaseOrderData(input, entity);
-
     return PurchaseOrder.of(purchaseOrderRepository.save(entity));
   }
 
@@ -111,7 +110,6 @@ public class PurchaseService {
     PurchaseItemEntity item = purchaseItemRepository.findById(input.getPurchaseItemId()).get();
     PurchaseCustomerEntity customer = purchaseCustomerRepository.findById(input.getPurchaseCustomerId()).get();
     UnitEntity unit = unitRepository.findById(input.getUnitId()).get();
-
     entity.setPurchaseDate(input.getPurchaseDate());
     entity.setPurchaseCustomerByPurchaseCustomerId(customer);
     entity.setPurchaseItemByPurchaseItemId(item);
@@ -119,9 +117,9 @@ public class PurchaseService {
     entity.setQuantity(input.getQuantity());
     entity.setPrice(input.getPrice());
     entity.setTotalAmount(input.getTotalAmount());
-    //      if (Objects.nonNull(input.getStatus())) {
-    //        entity.setStatus(input.getStatus());
-    //      }
+//    if (Objects.nonNull(input.getStatus())) {
+//      entity.setStatus(input.getStatus());
+//    }
   }
 
   public void deletePurchaseOrder(int id) {
@@ -129,6 +127,55 @@ public class PurchaseService {
     // TODO else throw resource not found exception.
     if (Objects.nonNull(entity)) {
       purchaseOrderRepository.delete(entity);
+    }
+  }
+
+  // =========================== Customer ===========================
+
+  public PurchaseCustomer addPurchaseCustomer(PurchaseCustomerInput input) {
+    PurchaseCustomerEntity entity = new PurchaseCustomerEntity();
+    syncPurchaseCustomerData(input, entity);
+    return PurchaseCustomer.of(purchaseCustomerRepository.save(entity));
+  }
+
+  @Transactional(readOnly = true)
+  public List<PurchaseCustomer> searchPurchaseCustomers(Pageable pageable) {
+    return purchaseCustomerRepository.findAll().stream()
+      .map(e -> PurchaseCustomer.of(e))
+      .collect(Collectors.toList());
+  }
+
+  public PurchaseCustomer editPurchaseCustomer(PurchaseCustomerInput input, int id) {
+    PurchaseCustomerEntity entity = purchaseCustomerRepository.findById(id).get();
+    // TODO else throw resource not found exception.
+    if (Objects.nonNull(entity)) {
+      syncPurchaseCustomerData(input, entity);
+      return PurchaseCustomer.of(purchaseCustomerRepository.save(entity));
+    }
+    return null;
+  }
+
+  private void syncPurchaseCustomerData(PurchaseCustomerInput input,
+                                        PurchaseCustomerEntity entity) {
+    input.setName(entity.getName());
+    input.setAddress(entity.getAddress());
+    input.setFax(entity.getFax());
+    input.setTel(entity.getTel());
+    input.setContact(entity.getContact());
+    input.setContactPhone(entity.getContactPhone());
+    input.setContactEmail(entity.getContactEmail());
+    input.setTaxIdNumber(entity.getTaxIdNumber());
+    input.setComment(entity.getComment());
+//    if (Objects.nonNull(input.getStatus())) {
+//      entity.setStatus(input.getStatus());
+//    }
+  }
+
+  public void deletePurchaseCustomer(int id) {
+    PurchaseCustomerEntity entity = purchaseCustomerRepository.findById(id).get();
+    // TODO else throw resource not found exception.
+    if (Objects.nonNull(entity)) {
+      purchaseCustomerRepository.delete(entity);
     }
   }
 }
