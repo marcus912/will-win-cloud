@@ -1,7 +1,7 @@
 package org.will.win.persistence.entity;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -9,9 +9,9 @@ import java.util.Objects;
 public class UnitEntity extends BaseEntity {
   private int id;
   private String name;
-  private Byte status;
+  private Boolean status;
   private String comment;
-  private Collection<PurchaseOrderEntity> purchaseOrdersById;
+  private List<PurchaseOrderEntity> purchaseOrdersById;
 
   @Id
   @Column(name = "id", nullable = false)
@@ -35,11 +35,11 @@ public class UnitEntity extends BaseEntity {
 
   @Basic
   @Column(name = "status", nullable = true)
-  public Byte getStatus() {
+  public Boolean getStatus() {
     return status;
   }
 
-  public void setStatus(Byte status) {
+  public void setStatus(Boolean status) {
     this.status = status;
   }
 
@@ -67,11 +67,11 @@ public class UnitEntity extends BaseEntity {
   }
 
   @OneToMany(mappedBy = "unitByUnitId", fetch = FetchType.LAZY)
-  public Collection<PurchaseOrderEntity> getPurchaseOrdersById() {
+  public List<PurchaseOrderEntity> getPurchaseOrdersById() {
     return purchaseOrdersById;
   }
 
-  public void setPurchaseOrdersById(Collection<PurchaseOrderEntity> purchaseOrdersById) {
+  public void setPurchaseOrdersById(List<PurchaseOrderEntity> purchaseOrdersById) {
     this.purchaseOrdersById = purchaseOrdersById;
   }
 }
