@@ -1,6 +1,7 @@
 package org.will.win.admin.model;
 
 import org.will.win.common.model.BaseModel;
+import org.will.win.common.utils.WillWinUtils;
 import org.will.win.persistence.entity.PurchaseOrderEntity;
 
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.Objects;
 
 public class PurchaseOrder extends BaseModel {
   private Integer id;
+  private String purchaseOrderNumber;
   private Date purchase;
   private String purchaseCustomerName;
   private String purchaseItemName;
@@ -19,6 +21,7 @@ public class PurchaseOrder extends BaseModel {
   private String comment;
 
   public PurchaseOrder(Integer id,
+                       String purchaseOrderNumber,
                        Date purchase,
                        String purchaseCustomerName,
                        String purchaseItemName,
@@ -32,6 +35,7 @@ public class PurchaseOrder extends BaseModel {
                        String createdBy,
                        String updatedBy) {
     this.id = id;
+    this.purchaseOrderNumber = purchaseOrderNumber;
     this.purchase = purchase;
     this.purchaseCustomerName = purchaseCustomerName;
     this.purchaseItemName = purchaseItemName;
@@ -48,7 +52,9 @@ public class PurchaseOrder extends BaseModel {
   }
 
   public static PurchaseOrder of(PurchaseOrderEntity purchaseOrderEntity) {
-    return new PurchaseOrder(purchaseOrderEntity.getId(),
+    return new PurchaseOrder(
+      purchaseOrderEntity.getId(),
+      WillWinUtils.concatPurchaseOrderNumber(purchaseOrderEntity.getPurchaseDate(), purchaseOrderEntity.getPoNumber()),
       purchaseOrderEntity.getPurchaseDate(),
       purchaseOrderEntity.getPurchaseCustomerByPurchaseCustomerId().getName(),
       purchaseOrderEntity.getPurchaseItemByPurchaseItemId().getName(),
@@ -71,6 +77,14 @@ public class PurchaseOrder extends BaseModel {
 
   public void setId(Integer id) {
     this.id = id;
+  }
+
+  public String getPurchaseOrderNumber() {
+    return purchaseOrderNumber;
+  }
+
+  public void setPurchaseOrderNumber(String purchaseOrderNumber) {
+    this.purchaseOrderNumber = purchaseOrderNumber;
   }
 
   public Date getPurchase() {

@@ -57,3 +57,39 @@ Content-Type: application/json
   "taxIdNumber": "12384706",
   "comment": "comment"
 }
+
+###
+### Purchase Order
+POST http://localhost:8080/purchase/orders
+Content-Type: application/json
+
+{
+  "purchaseDate": "2022-03-19",
+  "purchaseCustomerId": 1,
+  "purchaseItemId": 1,
+  "unitId": 1,
+  "quantity": 500,
+  "price": 500,
+  "totalAmount": 25000,
+  "comment": "comment"
+}
+
+###
+GET http://localhost:8080/purchase/orders
+Accept: application/json
+
+###
+
+PUT http://localhost:8080/purchase/orders/1
+Content-Type: application/json
+
+{
+  "purchaseDate": "2022-03-20",
+  "purchaseCustomerId": 1,
+  "purchaseItemId": 1,
+  "unitId": 1,
+  "quantity": 100,
+  "price": 700,
+  "totalAmount": 70000,
+  "comment": "comment-update"
+}

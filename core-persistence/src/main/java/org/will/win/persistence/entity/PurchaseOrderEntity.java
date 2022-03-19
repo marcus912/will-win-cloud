@@ -12,7 +12,11 @@ public class PurchaseOrderEntity extends BaseEntity {
   private int id;
 
   @Basic
-  @Column(name = "purchase_date", nullable = false)
+  @Column(name = "po_number", nullable = false, updatable = false)
+  private int poNumber;
+
+  @Basic
+  @Column(name = "purchase_date", nullable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date purchaseDate;
 
@@ -30,7 +34,7 @@ public class PurchaseOrderEntity extends BaseEntity {
 
   @Basic
   @Column(name = "status", nullable = true)
-  private Byte status;
+  private Integer status = 1;
 
   @Basic
   @Column(name = "comment", nullable = true, length = -1)
@@ -55,6 +59,14 @@ public class PurchaseOrderEntity extends BaseEntity {
 
   public void setId(int id) {
     this.id = id;
+  }
+
+  public int getPoNumber() {
+    return poNumber;
+  }
+
+  public void setPoNumber(int poNumber) {
+    this.poNumber = poNumber;
   }
 
   public Date getPurchaseDate() {
@@ -89,11 +101,11 @@ public class PurchaseOrderEntity extends BaseEntity {
     this.totalAmount = totalAmount;
   }
 
-  public Byte getStatus() {
+  public Integer getStatus() {
     return status;
   }
 
-  public void setStatus(Byte status) {
+  public void setStatus(Integer status) {
     this.status = status;
   }
 
