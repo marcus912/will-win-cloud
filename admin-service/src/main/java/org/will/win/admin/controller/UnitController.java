@@ -20,24 +20,24 @@ public class UnitController {
     this.unitService = unitService;
   }
 
-  @PostMapping("/")
+  @PostMapping()
   public UnitModel postUnit(@RequestBody UnitInput input) {
     return unitService.addUnit(input);
   }
 
-  @PutMapping("/")
-  public UnitModel putUnit(@RequestBody UnitInput input, int id) {
+  @PutMapping("/{id}")
+  public UnitModel putUnit(@RequestBody UnitInput input, @PathVariable int id) {
     return unitService.editUnit(input, id);
   }
 
-  @GetMapping("/")
+  @GetMapping()
   public List<UnitModel> putUnit() {
     return unitService.getUnits();
   }
 
-  @DeleteMapping("/")
+  @DeleteMapping("/{id}")
   @ResponseStatus(code = HttpStatus.NO_CONTENT)
-  public void putUnit(int id) {
+  public void putUnit(@PathVariable int id) {
     unitService.deleteUnit(id);
   }
 }

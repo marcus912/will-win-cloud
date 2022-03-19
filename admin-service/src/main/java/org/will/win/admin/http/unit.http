@@ -1,0 +1,23 @@
+### Unit
+
+POST http://localhost:8080/units
+Content-Type: application/json
+
+{
+  "name": "Unit-01",
+  "comment": "comment"
+}
+
+###
+GET http://localhost:8080/units
+Accept: application/json
+
+###
+
+PUT http://localhost:8080/units/1
+Content-Type: application/json
+
+{
+  "name": "Unit-01-updated",
+  "comment": "comment-updated"
+}

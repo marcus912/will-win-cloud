@@ -9,7 +9,7 @@ import java.util.Objects;
 public class UnitEntity extends BaseEntity {
   private int id;
   private String name;
-  private Boolean status;
+  private Boolean status = true;
   private String comment;
   private List<PurchaseOrderEntity> purchaseOrdersById;
 
