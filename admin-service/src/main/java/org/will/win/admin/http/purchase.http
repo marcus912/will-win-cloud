@@ -64,6 +64,7 @@ POST http://localhost:8080/purchase/orders
 Content-Type: application/json
 
 {
+  "poNumber": "2022031900001",
   "purchaseDate": "2022-03-19",
   "purchaseCustomerId": 1,
   "purchaseItemId": 1,
@@ -84,6 +85,7 @@ PUT http://localhost:8080/purchase/orders/1
 Content-Type: application/json
 
 {
+  "poNumber": "2022031900002",
   "purchaseDate": "2022-03-20",
   "purchaseCustomerId": 1,
   "purchaseItemId": 1,

@@ -12,8 +12,8 @@ public class PurchaseOrderEntity extends BaseEntity {
   private int id;
 
   @Basic
-  @Column(name = "po_number", nullable = false, updatable = false)
-  private int poNumber;
+  @Column(name = "po_number")
+  private String poNumber;
 
   @Basic
   @Column(name = "purchase_date", nullable = false, updatable = false)
@@ -61,11 +61,11 @@ public class PurchaseOrderEntity extends BaseEntity {
     this.id = id;
   }
 
-  public int getPoNumber() {
+  public String getPoNumber() {
     return poNumber;
   }
 
-  public void setPoNumber(int poNumber) {
+  public void setPoNumber(String poNumber) {
     this.poNumber = poNumber;
   }
 

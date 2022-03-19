@@ -96,7 +96,6 @@ public class PurchaseService {
 
   public PurchaseOrder addPurchaseOrder(PurchaseOrderInput input) {
     PurchaseOrderEntity entity = new PurchaseOrderEntity();
-    entity.setPoNumber(getNewPoNumber(input.getPurchaseDate()));
     syncPurchaseOrderData(input, entity);
     return PurchaseOrder.of(purchaseOrderRepository.save(entity));
   }
@@ -142,6 +141,7 @@ public class PurchaseService {
       .orElseThrow(() -> new PurchaseCustomerNotFoundException(input.getPurchaseCustomerId()));
     UnitEntity unit = unitRepository.findById(input.getUnitId())
       .orElseThrow(() -> new UnitNotFoundException(input.getUnitId()));
+    entity.setPoNumber(input.getPoNumber());
     entity.setPurchaseDate(input.getPurchaseDate());
     entity.setPurchaseCustomerByPurchaseCustomerId(customer);
     entity.setPurchaseItemByPurchaseItemId(item);

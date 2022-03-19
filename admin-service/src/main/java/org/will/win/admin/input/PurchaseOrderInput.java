@@ -5,6 +5,9 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class PurchaseOrderInput {
+
+  private String poNumber;
+
   @NotEmpty
   private Date purchaseDate;
 
@@ -29,6 +32,14 @@ public class PurchaseOrderInput {
   private Integer status;
 
   private String comment;
+
+  public String getPoNumber() {
+    return poNumber;
+  }
+
+  public void setPoNumber(String poNumber) {
+    this.poNumber = poNumber;
+  }
 
   public Date getPurchaseDate() {
     return purchaseDate;
