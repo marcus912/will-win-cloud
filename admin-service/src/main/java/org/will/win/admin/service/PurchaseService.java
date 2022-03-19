@@ -12,6 +12,10 @@ import org.will.win.admin.input.PurchaseOrderInput;
 import org.will.win.admin.model.PurchaseCustomer;
 import org.will.win.admin.model.PurchaseItem;
 import org.will.win.admin.model.PurchaseOrder;
+import org.will.win.common.exception.PurchaseCustomerNotFoundException;
+import org.will.win.common.exception.PurchaseItemNotFoundException;
+import org.will.win.common.exception.PurchaseOrderNotFoundException;
+import org.will.win.common.exception.UnitNotFoundException;
 import org.will.win.common.utils.WillWinUtils;
 import org.will.win.persistence.entity.PurchaseCustomerEntity;
 import org.will.win.persistence.entity.PurchaseItemEntity;
@@ -69,8 +73,8 @@ public class PurchaseService {
   }
 
   public PurchaseItem editPurchaseItem(PurchaseItemInput input, int id) {
-    PurchaseItemEntity entity = purchaseItemRepository.findById(id).get();
-    // TODO else throw resource not found exception.
+    PurchaseItemEntity entity = purchaseItemRepository.findById(id)
+      .orElseThrow(() -> new PurchaseItemNotFoundException(id));
     if (Objects.nonNull(entity)) {
       entity.setName(input.getName());
       entity.setComment(input.getComment());
@@ -83,11 +87,9 @@ public class PurchaseService {
   }
 
   public void deletePurchaseItem(int id) {
-    PurchaseItemEntity entity = purchaseItemRepository.findById(id).get();
-    // TODO else throw resource not found exception.
-    if (Objects.nonNull(entity)) {
-      purchaseItemRepository.delete(entity);
-    }
+    PurchaseItemEntity entity = purchaseItemRepository.findById(id)
+      .orElseThrow(() -> new PurchaseItemNotFoundException(id));
+    purchaseItemRepository.delete(entity);
   }
 
   // =========================== Order ===========================
@@ -100,10 +102,9 @@ public class PurchaseService {
   }
 
   /**
-   * Find a new Po number which is belonged to this purchase date.
+   * Find a new PoNumber which is belonged to this purchase date.
    *
-   * @param purchaseDate
-   * @return
+   * @return PoNumber
    */
   private int getNewPoNumber(Date purchaseDate) {
     int poNumber;
@@ -122,25 +123,25 @@ public class PurchaseService {
   @Transactional(readOnly = true)
   public List<PurchaseOrder> searchPurchaseOrders(Pageable pageable) {
     return purchaseOrderRepository.findAll().stream()
-      .map(e -> PurchaseOrder.of(e))
+      .map(PurchaseOrder::of)
       .collect(Collectors.toList());
   }
 
   public PurchaseOrder editPurchaseOrder(PurchaseOrderInput input, int id) {
-    PurchaseOrderEntity entity = purchaseOrderRepository.findById(id).get();
-    // TODO else throw resource not found exception.
-    if (Objects.nonNull(entity)) {
-      syncPurchaseOrderData(input, entity);
-      return PurchaseOrder.of(purchaseOrderRepository.save(entity));
-    }
-    return null;
+    PurchaseOrderEntity entity = purchaseOrderRepository.findById(id)
+      .orElseThrow(() -> new PurchaseOrderNotFoundException(id));
+    syncPurchaseOrderData(input, entity);
+    return PurchaseOrder.of(purchaseOrderRepository.save(entity));
   }
 
   private void syncPurchaseOrderData(PurchaseOrderInput input,
                                      PurchaseOrderEntity entity) {
-    PurchaseItemEntity item = purchaseItemRepository.findById(input.getPurchaseItemId()).get();
-    PurchaseCustomerEntity customer = purchaseCustomerRepository.findById(input.getPurchaseCustomerId()).get();
-    UnitEntity unit = unitRepository.findById(input.getUnitId()).get();
+    PurchaseItemEntity item = purchaseItemRepository.findById(input.getPurchaseItemId())
+      .orElseThrow(() -> new PurchaseItemNotFoundException(input.getPurchaseItemId()));
+    PurchaseCustomerEntity customer = purchaseCustomerRepository.findById(input.getPurchaseCustomerId())
+      .orElseThrow(() -> new PurchaseCustomerNotFoundException(input.getPurchaseCustomerId()));
+    UnitEntity unit = unitRepository.findById(input.getUnitId())
+      .orElseThrow(() -> new UnitNotFoundException(input.getUnitId()));
     entity.setPurchaseDate(input.getPurchaseDate());
     entity.setPurchaseCustomerByPurchaseCustomerId(customer);
     entity.setPurchaseItemByPurchaseItemId(item);
@@ -154,11 +155,9 @@ public class PurchaseService {
   }
 
   public void deletePurchaseOrder(int id) {
-    PurchaseOrderEntity entity = purchaseOrderRepository.findById(id).get();
-    // TODO else throw resource not found exception.
-    if (Objects.nonNull(entity)) {
-      purchaseOrderRepository.delete(entity);
-    }
+    PurchaseOrderEntity entity = purchaseOrderRepository.findById(id)
+      .orElseThrow(() -> new PurchaseOrderNotFoundException(id));
+    purchaseOrderRepository.delete(entity);
   }
 
   // =========================== Customer ===========================
@@ -172,18 +171,15 @@ public class PurchaseService {
   @Transactional(readOnly = true)
   public List<PurchaseCustomer> searchPurchaseCustomers(Pageable pageable) {
     return purchaseCustomerRepository.findAll().stream()
-      .map(e -> PurchaseCustomer.of(e))
+      .map(PurchaseCustomer::of)
       .collect(Collectors.toList());
   }
 
   public PurchaseCustomer editPurchaseCustomer(PurchaseCustomerInput input, int id) {
-    PurchaseCustomerEntity entity = purchaseCustomerRepository.findById(id).get();
-    // TODO else throw resource not found exception.
-    if (Objects.nonNull(entity)) {
-      syncPurchaseCustomerData(input, entity);
-      return PurchaseCustomer.of(purchaseCustomerRepository.save(entity));
-    }
-    return null;
+    PurchaseCustomerEntity entity = purchaseCustomerRepository.findById(id)
+      .orElseThrow(() -> new PurchaseCustomerNotFoundException(id));
+    syncPurchaseCustomerData(input, entity);
+    return PurchaseCustomer.of(purchaseCustomerRepository.save(entity));
   }
 
   private void syncPurchaseCustomerData(PurchaseCustomerInput input,
@@ -203,11 +199,9 @@ public class PurchaseService {
   }
 
   public void deletePurchaseCustomer(int id) {
-    PurchaseCustomerEntity entity = purchaseCustomerRepository.findById(id).get();
-    // TODO else throw resource not found exception.
-    if (Objects.nonNull(entity)) {
-      purchaseCustomerRepository.delete(entity);
-    }
+    PurchaseCustomerEntity entity = purchaseCustomerRepository.findById(id)
+      .orElseThrow(() -> new PurchaseCustomerNotFoundException(id));
+    purchaseCustomerRepository.delete(entity);
   }
 }
 

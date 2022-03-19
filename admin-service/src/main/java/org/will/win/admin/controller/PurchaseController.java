@@ -52,7 +52,7 @@ public class PurchaseController {
 
   @PostMapping("/orders")
   public PurchaseOrder postPurchaseOrder(@RequestBody PurchaseOrderInput input) {
-    return purchaseService.addPurchaseOrder(input);
+      return purchaseService.addPurchaseOrder(input);
   }
 
   @GetMapping("/orders")
