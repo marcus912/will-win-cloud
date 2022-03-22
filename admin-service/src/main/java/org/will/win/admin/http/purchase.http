@@ -2,8 +2,8 @@ POST http://localhost:8080/purchase/items
 Content-Type: application/json
 
 {
-  "name": "item-1",
-  "comment": "comment"
+  "name": "",
+  "comment": ""
 }
 
 ###

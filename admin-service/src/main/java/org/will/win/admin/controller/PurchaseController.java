@@ -13,6 +13,7 @@ import org.will.win.admin.model.PurchaseItem;
 import org.will.win.admin.model.PurchaseOrder;
 import org.will.win.admin.service.PurchaseService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController()
@@ -27,7 +28,7 @@ public class PurchaseController {
   }
 
   @PostMapping("/items")
-  public PurchaseItem postPurchaseItem(@RequestBody PurchaseItemInput input) {
+  public PurchaseItem postPurchaseItem(@Valid @RequestBody PurchaseItemInput input) {
     return purchaseService.addPurchaseItem(input);
   }
 
