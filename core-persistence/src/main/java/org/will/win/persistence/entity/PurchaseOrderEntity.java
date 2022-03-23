@@ -9,6 +9,7 @@ import java.util.Objects;
 public class PurchaseOrderEntity extends BaseEntity {
   @Id
   @Column(name = "id", nullable = false)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
   @Basic

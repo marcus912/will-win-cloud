@@ -10,6 +10,7 @@ public class PurchaseCustomerEntity extends BaseEntity {
 
   @Id
   @Column(name = "id", nullable = false)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
   @Basic
